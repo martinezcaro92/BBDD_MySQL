@@ -7,7 +7,8 @@ SHOW DATABASES;
 /*A partir de las bbdd existentes, selecciona padronDB*/
 USE padronDB;
 
-/*Crear una tabla llamada "ciudadanos" con 5 campos y restricciones a los campos/atributos/columnas */
+/*Crear una tabla llamada "ciudadanos" con 5 campos y restricciones a los campos/atributos/columnas 
+    De esta forma falla al introducirlo en el SGBD MySQL*/
 CREATE TABLE IF NOT EXISTS ciudadanos (
     DNI_ciudadano VARCHAR(9) PRIMARY KEY,
     nombre_ciudadano VARCHAR(100) NOT NULL,
@@ -15,6 +16,18 @@ CREATE TABLE IF NOT EXISTS ciudadanos (
     telefono_ciudadano INTEGER CHECK (telefono_ciudadano LIKE '9________' OR telefono_ciudadano LIKE '6________' OR telefono_ciudadano LIKE '7________'),
     id_municipio INTEGER FOREIGN KEY REFERENCES municipios(id_municipio)
 );
+
+/* Modificación del FK en las tablas anteriores */
+CREATE TABLE IF NOT EXISTS ciudadanos (
+    DNI_ciudadano VARCHAR(9) PRIMARY KEY,
+    nombre_ciudadano VARCHAR(100) NOT NULL,
+    apellidos_ciudadano VARCHAR(150) NOT NULL,
+    telefono_ciudadano INTEGER CHECK (telefono_ciudadano LIKE '9________' OR telefono_ciudadano LIKE '6________' OR telefono_ciudadano LIKE '7________'),
+    id_municipio INTEGER NOT NULL,
+
+    FOREIGN KEY (id_municipio) REFERENCES municipios(id_municipio)
+);
+
 /* Al introducir los comandos anteriores (CREATE TABLE para ciudadanos), nos da error porque utilizamos una 
     FK de una tabla que no existe previamente. Por lo tanto, tenemos que comenzar creando las tablas que menos
     dependencias tienen. */
@@ -26,7 +39,8 @@ CREATE TABLE IF NOT EXISTS comarcas (
     extension_comarca DECIMAL(10,2) NOT NULL
 );
 
-/* Crear tabla llamada "municipios" con 3 campos y restricciones a los campos/atributos/columnas */
+/* Crear tabla llamada "municipios" con 3 campos y restricciones a los campos/atributos/columnas 
+    De esta forma falla al introducirlo en el SGBD MySQL*/
 CREATE TABLE IF NOT EXISTS municipios (
     id_municipio INTEGER PRIMARY KEY,
     nombre_municipio VARCHAR(100) NOT NULL,
@@ -45,12 +59,15 @@ CREATE TABLE IF NOT EXISTS municipios (
     FOREIGN KEY (id_comarca) REFERENCES comarcas(id_comarca)
 );
 
-CREATE TABLE IF NOT EXISTS ciudadanos (
-    DNI_ciudadano VARCHAR(9) PRIMARY KEY,
-    nombre_ciudadano VARCHAR(100) NOT NULL,
-    apellidos_ciudadano VARCHAR(150) NOT NULL,
-    telefono_ciudadano INTEGER CHECK (telefono_ciudadano LIKE '9________' OR telefono_ciudadano LIKE '6________' OR telefono_ciudadano LIKE '7________'),
-    id_municipio INTEGER NOT NULL,
+/* Mostrar las tablas creadas en padronDB */
+SHOW TABLES;
 
-    FOREIGN KEY (id_municipio) REFERENCES municipios(id_municipio)
-);
+/* Mostrar la estructura de la tabla ciudadanos */
+DESCRIBE ciudadanos;
+
+/* Modificar la tabla ciudadano para que nombre_ciudadano tenga un tamaño máximo de 100 caracteres */ 
+ALTER TABLE ciudadanos
+MODIFY nombre_ciudadano VARCHAR(150) NOT NULL;
+
+INSERT INTO Persons (ID, LastName, FirstName, Age)  
+    VALUES (1, 'Re', 'Miguel', 17);
