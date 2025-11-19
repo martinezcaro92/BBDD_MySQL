@@ -204,4 +204,29 @@ SELECT * FROM Customers;
 /*Devolver una tabla que solo devuelva el Nombre del cliente y la ciudad de la tabla CustomersDaw*/
 SELECT CustomerName, City FROM CustomersDaw;
 
-/*Mostrar las ciudades difernetes que hay en la tabla Customers*/
+/*Mostrar las ciudades diferentes que hay en la tabla Customers*/
+SELECT DISTINCT City FROM Customers;
+
+/* Mostrar los países diferentes que hay en la tabla CustomersDaw */
+SELECT DISTINCT Country FROM CustomersDaw;
+
+/*Mostrar cuántas ciudades diferentes hay en la tabla Customers*/ 
+SELECT COUNT(DISTINCT City) FROM Customers;
+
+/* Mostrar cuántos países diferentes hay en la tabla CustomersDaw */
+SELECT COUNT(DISTINCT Country) FROM CustomersDaw;
+
+/*Mostrar todos los datos de los clientes que viven en la ciudad de Londres en la tabla Customers*/
+SELECT * 
+    FROM Customers
+    WHERE City = 'London';
+
+/*Mostrar todos los datos de los clientes que viven en Germany en la tabla CustomersDaw */
+SELECT * 
+    FROM CustomersDaw
+    WHERE Country = 'Germany';
+
+/* Mostrar los clientes cuyo código postal sea mayor que 05022 en la tabla Customers */
+SELECT * 
+    FROM Customers
+    WHERE PostalCode > '05022';
